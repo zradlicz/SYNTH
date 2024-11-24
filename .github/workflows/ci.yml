@@ -28,35 +28,10 @@ jobs:
       run: |
         mkdir build
 
-    - name: Set up CMake
+    - name: run CMake
       uses: threeal/cmake-action@v2.0.0
       with:
         cmake-version: '3.19'  # Adjust to the CMake version you need
-
-    - name: Configure CMake
-      run: |
-        cmake -S . -B build
-
-    - name: Build
-      run: |
-        cmake --build build
-
-  test:
-    name: Test
-    needs: build  # Ensure test job runs after build
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4.2.1
-      with:
-        submodules: 'true'
-
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential libgtest-dev cmake
-        sudo apt-get install libasound2-dev
 
     - name: Run tests
       run: |
