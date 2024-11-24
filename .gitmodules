@@ -1,0 +1,6 @@
+[submodule "lib/fff"]
+	path = lib/fff
+	url = https://github.com/meekrosoft/fff
+[submodule "unit_tests/lib/fff"]
+	path = unit_tests/lib/fff
+	url = https://github.com/meekrosoft/fff
