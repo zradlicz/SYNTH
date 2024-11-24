@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  build-project:
+  build:
     name: Build Project
     runs-on: ubuntu-22.04
     steps:
