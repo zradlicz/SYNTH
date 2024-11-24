@@ -3,6 +3,8 @@ project(SYNTH)
 
 set(CMAKE_C_STANDARD 99)
 
+enable_testing()
+
 # Add source and include directories
 include_directories(${CMAKE_SOURCE_DIR}/inc)
 file(GLOB_RECURSE LIB_SOURCES "src/*.c")
@@ -37,3 +39,5 @@ target_include_directories(tests PRIVATE src)
 
 # Define the UNIT_TEST macro for tests
 target_compile_definitions(tests PRIVATE UNIT_TEST)
+
+add_test(NAME tests COMMAND tests)
