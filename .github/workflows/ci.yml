@@ -33,7 +33,9 @@ jobs:
       with:
         cmake-version: '3.19'  # Adjust to the CMake version you need
 
-    - name: Run tests
+  test:
+    name: test
+      needs: build
       run: |
         cd build
         ./tests
