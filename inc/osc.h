@@ -14,14 +14,14 @@ typedef enum {
 typedef struct Oscillator_S * Oscillator_T;
 
 // Initialize the oscillator
-void oscillator_init(Oscillator_T osc, double sample_rate, WaveformType waveform_type);
+Oscillator_T Oscillator_New(WaveformType waveform_type);
 
 // Set properties
-void oscillator_set_frequency(Oscillator_T osc, double frequency);
-void oscillator_set_amplitude(Oscillator_T osc, int amplitude);
-void oscillator_set_waveform(Oscillator_T osc, WaveformType waveform_type);
+void Oscillator_SetFrequency(Oscillator_T osc, double frequency);
+void Oscillator_SetAmplitude(Oscillator_T osc, int amplitude);
+void Oscillator_SetWaveform(Oscillator_T osc, WaveformType waveform_type);
 
 // Generate waveform samples
-void oscillator_generate(Oscillator_T osc, int16_t* buffer, size_t num_samples);
+void Oscillator_Generate(Oscillator_T osc);
 
 #endif // OSCILLATOR_H

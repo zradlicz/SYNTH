@@ -10,16 +10,19 @@
 typedef struct DoubleBuffer_S * DoubleBuffer_T;
 
 // Initialize the double buffer
-void double_buffer_init(DoubleBuffer_T db);
+DoubleBuffer_T DoubleBuffer_New(void);
 
 // Get active or inactive buffer pointers
-int16_t* double_buffer_get_active(DoubleBuffer_T db);
-int16_t* double_buffer_get_inactive(DoubleBuffer_T db);
+int16_t* DoubleBuffer_GetActive(DoubleBuffer_T db);
+int16_t* DoubleBuffer_GetInactive(DoubleBuffer_T db);
 
 // Swap the active and inactive buffers
-void double_buffer_swap(DoubleBuffer_T db);
+void DoubleBuffer_Swap(DoubleBuffer_T db);
 
 // Clear both buffers
-void double_buffer_clear(DoubleBuffer_T db);
+void DoubleBuffer_Clear(DoubleBuffer_T db);
+
+// get size of buffer
+size_t DoubleBuffer_Size(DoubleBuffer_T db);
 
 #endif // DOUBLE_BUFFER_H

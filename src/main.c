@@ -5,21 +5,17 @@
 
 #define SAMPLE_RATE 44100
 
-static DoubleBuffer_T audio_buffer;
 static Oscillator_T osc;
 
 void audio_loop() {
-    double_buffer_init(audio_buffer);
-    oscillator_init(osc, SAMPLE_RATE, WAVEFORM_SQUARE);
 
-    oscillator_set_frequency(osc, 440.0);
-    oscillator_set_amplitude(osc, 20000);
+    osc = Oscillator_New(WAVEFORM_SQUARE);
+
+    Oscillator_SetFrequency(osc, 440.0);
+    Oscillator_SetAmplitude(osc, 20000);
 
     while (true) {
-        int16_t* inactive_buffer = double_buffer_get_inactive(audio_buffer);
-        oscillator_generate(osc, inactive_buffer, BUFFER_SIZE);
-        double_buffer_swap(audio_buffer);
-
+        Oscillator_Generate(osc);
         // Replace this line with non-blocking ALSA output
         printf("Audio buffer ready\n");
     }
