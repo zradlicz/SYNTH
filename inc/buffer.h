@@ -23,6 +23,6 @@ void DoubleBuffer_Swap(DoubleBuffer_T db);
 void DoubleBuffer_Clear(DoubleBuffer_T db);
 
 // get size of buffer
-size_t DoubleBuffer_Size(DoubleBuffer_T db);
+size_t DoubleBuffer_GetSize(DoubleBuffer_T db);
 
 #endif // DOUBLE_BUFFER_H
