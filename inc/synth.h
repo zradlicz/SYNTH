@@ -2,15 +2,20 @@
 #define SYNTH_H
 
 #include <stdint.h>
+#include <stddef.h>
+#include "buffer.h"
+#include "osc.h"
 
-//opaque type
-typedef struct Synth_S * Synth_T;
+// Synthesizer opaque type
+typedef struct Synth_S* Synth_T;
 
-Synth_T Synth_New(void);
-void Synth_AddOscillator(Synth_T synth, Oscillator_T osc);
-void Synth_Run(Synth_T synth, OutputType_t output_type);
+// Initialize the synthesizer
+void Synth_Init(Synth_T synth, DoubleBuffer_T* buffer, Oscillator_T* oscillators, size_t num_oscillators);
 
-uint16_t multiply(uint16_t a, uint16_t b);
-uint16_t add_numbers(uint16_t a, uint16_t b);
+// Start the synthesizer threads
+void Synth_Start(Synth_T synth);
+
+// Stop the synthesizer threads
+void Synth_Stop(Synth_T synth);
 
 #endif // SYNTH_H
