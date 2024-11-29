@@ -12,7 +12,7 @@ struct Oscillator_S {
     WaveformType waveform_type;
 };
 
-void oscillator_init(Oscillator* osc, double sample_rate, WaveformType waveform_type) {
+void oscillator_init(Oscillator_T osc, double sample_rate, WaveformType waveform_type) {
     osc->frequency = 440.0;  // Default frequency (A4)
     osc->amplitude = 32767; // Default amplitude for 16-bit audio
     osc->phase = 0.0;
@@ -20,19 +20,19 @@ void oscillator_init(Oscillator* osc, double sample_rate, WaveformType waveform_
     osc->waveform_type = waveform_type;
 }
 
-void oscillator_set_frequency(Oscillator* osc, double frequency) {
+void oscillator_set_frequency(Oscillator_T osc, double frequency) {
     osc->frequency = frequency;
 }
 
-void oscillator_set_amplitude(Oscillator* osc, int amplitude) {
+void oscillator_set_amplitude(Oscillator_T osc, int amplitude) {
     osc->amplitude = amplitude;
 }
 
-void oscillator_set_waveform(Oscillator* osc, WaveformType waveform_type) {
+void oscillator_set_waveform(Oscillator_T osc, WaveformType waveform_type) {
     osc->waveform_type = waveform_type;
 }
 
-void oscillator_generate(Oscillator* osc, int16_t* buffer, size_t num_samples) {
+void oscillator_generate(Oscillator_T osc, int16_t* buffer, size_t num_samples) {
     double increment = 2.0 * PI * osc->frequency / osc->sample_rate;
 
     for (size_t i = 0; i < num_samples; ++i) {
