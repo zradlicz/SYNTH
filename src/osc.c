@@ -4,7 +4,7 @@
 
 #define PI 3.14159265358979323846
 
-struct Oscillator {
+struct Oscillator_S {
     double frequency;
     int amplitude;
     double phase;

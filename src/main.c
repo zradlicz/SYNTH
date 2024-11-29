@@ -5,8 +5,8 @@
 
 #define SAMPLE_RATE 44100
 
-static DoubleBuffer audio_buffer;
-static Oscillator osc;
+static DoubleBuffer_T audio_buffer;
+static Oscillator_T osc;
 
 void audio_loop() {
     double_buffer_init(&audio_buffer);
@@ -22,7 +22,6 @@ void audio_loop() {
 
         // Replace this line with non-blocking ALSA output
         printf("Audio buffer ready\n");
-        usleep(100000); // Simulate playback time
     }
 }
 
