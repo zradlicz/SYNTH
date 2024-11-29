@@ -12,8 +12,8 @@ void audio_loop() {
     double_buffer_init(audio_buffer);
     oscillator_init(osc, SAMPLE_RATE, WAVEFORM_SQUARE);
 
-    oscillator_set_frequency(&osc, 440.0);
-    oscillator_set_amplitude(&osc, 20000);
+    oscillator_set_frequency(osc, 440.0);
+    oscillator_set_amplitude(osc, 20000);
 
     while (true) {
         int16_t* inactive_buffer = double_buffer_get_inactive(audio_buffer);
