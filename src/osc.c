@@ -25,21 +25,22 @@ Oscillator_T Oscillator_New(WaveformType waveform_type) {
     return osc;
 }
 
-void Oscillator_set_frequency(Oscillator_T osc, double frequency) {
+void Oscillator_SetFrequency(Oscillator_T osc, double frequency) {
     osc->frequency = frequency;
 }
 
-void Oscillator_set_amplitude(Oscillator_T osc, int amplitude) {
+void Oscillator_SetAmplitude(Oscillator_T osc, int amplitude) {
     osc->amplitude = amplitude;
 }
 
-void Oscillator_set_waveform(Oscillator_T osc, WaveformType waveform_type) {
+void Oscillator_SetWaveform(Oscillator_T osc, WaveformType waveform_type) {
     osc->waveform_type = waveform_type;
 }
 
-void Oscillator_generate(Oscillator_T osc) {
+void Oscillator_Generate(Oscillator_T osc) {
     double increment = 2.0 * PI * osc->frequency / osc->sample_rate;
-    int16_t* buffer[BUFFER_SIZE] = DoubleBuffer_GetInactive(osc->audio_buffer);
+    int16_t buffer[BUFFER_SIZE];
+    buffer = DoubleBuffer_GetInactive(osc->audio_buffer);
     for (size_t i = 0; i < DoubleBuffer_GetSize(osc->audio_buffer); ++i) 
     {
         switch (osc->waveform_type) 
