@@ -1,4 +1,4 @@
-#include "double_buffer.h"
+#include "buffer.h"
 #include <string.h>
 
 struct DoubleBuffer {

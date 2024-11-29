@@ -1,4 +1,4 @@
-#include "oscillator.h"
+#include "osc.h"
 #include <math.h>
 #include <string.h>
 

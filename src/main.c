@@ -1,8 +1,7 @@
-#include "double_buffer.h"
-#include "oscillator.h"
+#include "buffer.h"
+#include "osc.h"
 #include <stdio.h>
 #include <stdbool.h>
-#include <unistd.h>
 
 #define SAMPLE_RATE 44100
 
