@@ -10,8 +10,8 @@ struct Synth_S {
     DoubleBuffer_T buffer;
     Oscillator_T oscillators[MAX_OSCILLATORS];
     
-    pthread_t *restrict generator_thread;
-    pthread_t *restrict output_thread;
+    pthread_t generator_thread;
+    pthread_t output_thread;
     
     bool running;
 
@@ -112,14 +112,14 @@ void Synth_Start(Synth_T synth) {
     if (synth->running) return;
     synth->running = true;
 
-    pthread_create(synth->generator_thread, NULL, Synth_GenerateAudio, synth);
-    pthread_create(synth->output_thread, NULL, Synth_OutputAudio, synth);
+    pthread_create(&synth->generator_thread, NULL, Synth_GenerateAudio, synth);
+    pthread_create(&synth->output_thread, NULL, Synth_OutputAudio, synth);
 }
 
 void Synth_Stop(Synth_T synth) {
     if (!synth->running) return;
     synth->running = false;
 
-    pthread_join(*synth->generator_thread, NULL);
-    pthread_join(*synth->output_thread, NULL);
+    pthread_join(synth->generator_thread, NULL);
+    pthread_join(synth->output_thread, NULL);
 }
