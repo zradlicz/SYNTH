@@ -1,4 +1,5 @@
 #include "synth.h"
+#include "output.h"
 #include <pthread.h>
 #include <stdbool.h>
 #include <string.h>
@@ -19,7 +20,7 @@ struct Synth_S {
 };
 
 // Audio generation thread
-static void Synth_GenerateAudio(Synth_T synth) {
+static void* Synth_GenerateAudio(Synth_T synth) {
     //while th synth is running
     while (synth->running) {
         //lock the mutex
@@ -27,8 +28,8 @@ static void Synth_GenerateAudio(Synth_T synth) {
         //create a temporary buffer and a mixed buffer
         //temporary buffer is used to store the output of each oscillator
         //mixed buffer is used to store the sum of all oscillator outputs
-        int16_t[BUFFER_SIZE] temp_buffer;
-        int16_t[BUFFER_SIZE] mixed_buffer;
+        int16_t temp_buffer[BUFFER_SIZE];
+        int16_t mixed_buffer[BUFFER_SIZE];
 
         memset(temp_buffer, 0, BUFFER_SIZE * sizeof(int16_t));
         memset(mixed_buffer, 0, BUFFER_SIZE * sizeof(int16_t));
@@ -39,7 +40,7 @@ static void Synth_GenerateAudio(Synth_T synth) {
             if(synth->oscillators[i] != NULL)
             {
                 //for each oscilaltor, generate audio and add it to the mixed buffer
-                Oscillator_Generate(oscillators[i], temp_buffer, sizeof(temp_buffer));
+                Oscillator_Generate(synth->oscillators[i], temp_buffer, sizeof(temp_buffer));
                 mixed_buffer[i] += temp_buffer[i];
             }
             else
@@ -64,7 +65,7 @@ static void Synth_GenerateAudio(Synth_T synth) {
 }
 
 // Audio output thread
-static void Synth_OutputAudio(Synth_T synth) {
+static void* Synth_OutputAudio(Synth_T synth) {
     while (synth->running) {
         //lock the mutex while the audio is outputting
         pthread_mutex_lock(synth->mutex);
@@ -75,7 +76,7 @@ static void Synth_OutputAudio(Synth_T synth) {
         //creat temp buffer to store active buffer
         int16_t active_buffer[BUFFER_SIZE];
         // Output the active buffer
-        DoubleBuffer_GetActive(synth->buffer, acttive_buffer, sizeof(active_buffer));
+        DoubleBuffer_GetActive(synth->buffer, active_buffer, sizeof(active_buffer));
         
         Output_File(active_buffer);
 
