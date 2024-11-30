@@ -10,8 +10,8 @@ struct Synth_S {
     DoubleBuffer_T buffer;
     Oscillator_T oscillators[MAX_OSCILLATORS];
     
-    pthread_t generator_thread;
-    pthread_t output_thread;
+    pthread_t *restrict generator_thread;
+    pthread_t *restrict output_thread;
     
     bool running;
 
@@ -80,7 +80,7 @@ static void* Synth_OutputAudio(void * arg) {
         // Output the active buffer
         DoubleBuffer_GetActive(synth->buffer, active_buffer, sizeof(active_buffer));
         
-        Output_File(active_buffer);
+        Output_File(active_buffer, sizeof(active_buffer));
 
         printf("Outputting audio...\n");
 
