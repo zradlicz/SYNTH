@@ -120,6 +120,6 @@ void Synth_Stop(Synth_T synth) {
     if (!synth->running) return;
     synth->running = false;
 
-    pthread_join(synth->generator_thread, NULL);
-    pthread_join(synth->output_thread, NULL);
+    pthread_join(*synth->generator_thread, NULL);
+    pthread_join(*synth->output_thread, NULL);
 }
