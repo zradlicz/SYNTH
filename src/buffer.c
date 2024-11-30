@@ -9,7 +9,7 @@ struct DoubleBuffer_S {
 DoubleBuffer_T DoubleBuffer_New(void) {
     static struct DoubleBuffer_S db;
     DoubleBuffer_T me = &db;
-    DoubleBuffer_T db;
+    DoubleBuffer_T me = NULL;
     memset(me->active_buffer, 0, sizeof(me->active_buffer));
     memset(me->inactive_buffer, 0, sizeof(me->inactive_buffer));
     return me;
