@@ -44,7 +44,7 @@ static void Synth_GenerateAudio(Synth_T synth) {
 
         DoubleBuffer_UpdateInactive(synth->buffer, mixed_buffer);
 
-        // Swap the buffers
+        // Swap inactive buffer to active buffer
         DoubleBuffer_Swap(synth->buffer);
 
         // Signal buffer is ready

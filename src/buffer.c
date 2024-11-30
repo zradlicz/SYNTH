@@ -2,18 +2,14 @@
 #include <string.h>
 
 struct DoubleBuffer_S {
-    int16_t buffer_a[BUFFER_SIZE];
-    int16_t buffer_b[BUFFER_SIZE];
-    int16_t* active_buffer;
-    int16_t* inactive_buffer;
+    int16_t active_buffer[BUFFER_SIZE];
+    int16_t inactive_buffer[BUFFER_SIZE];
 };
 
 DoubleBuffer_T DoubleBuffer_New(void) {
     DoubleBuffer_T db;
-    memset(db->buffer_a, 0, sizeof(db->buffer_a));
-    memset(db->buffer_b, 0, sizeof(db->buffer_b));
-    db->active_buffer = db->buffer_a;
-    db->inactive_buffer = db->buffer_b;
+    memset(db->active_buffer, 0, sizeof(db->active_buffer));
+    memset(db->inactive_buffer, 0, sizeof(db->inactive_buffer));
     return db;
 }
 
