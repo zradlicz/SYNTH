@@ -1,7 +1,6 @@
 #ifndef SYNTH_H
 #define SYNTH_H
 
-#include "double_buffer.h"  // Include your double buffer implementation
 #include "oscillator.h"     // Include your oscillator implementation
 #include <pthread.h>
 #include <stdbool.h>
