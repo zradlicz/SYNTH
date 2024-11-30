@@ -1,21 +1,21 @@
 #ifndef SYNTH_H
 #define SYNTH_H
 
+#include "double_buffer.h"  // Include your double buffer implementation
+#include "oscillator.h"     // Include your oscillator implementation
+#include <pthread.h>
+#include <stdbool.h>
 #include <stdint.h>
-#include <stddef.h>
-#include "buffer.h"
-#include "osc.h"
 
-// Synthesizer opaque type
+#define MAX_OSCILLATORS 16
+
+// Opaque type for Synth
 typedef struct Synth_S* Synth_T;
 
-// Initialize the synthesizer
-void Synth_Init(Synth_T synth, DoubleBuffer_T* buffer, Oscillator_T* oscillators, size_t num_oscillators);
-
-// Start the synthesizer threads
+// Functions to manage Synth lifecycle
+Synth_T Synth_New(void);
+void Synth_AddOscillator(Synth_T synth, Oscillator_T osc);
 void Synth_Start(Synth_T synth);
-
-// Stop the synthesizer threads
 void Synth_Stop(Synth_T synth);
 
 #endif // SYNTH_H
