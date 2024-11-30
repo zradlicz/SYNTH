@@ -1,7 +1,7 @@
 #ifndef SYNTH_H
 #define SYNTH_H
 
-#include "oscillator.h"     // Include your oscillator implementation
+#include "osc.h"     // Include your oscillator implementation
 #include <pthread.h>
 #include <stdbool.h>
 #include <stdint.h>
