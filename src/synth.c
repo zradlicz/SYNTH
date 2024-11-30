@@ -20,8 +20,9 @@ struct Synth_S {
 };
 
 // Audio generation thread
-static void* Synth_GenerateAudio(Synth_T synth) {
-    //while th synth is running
+static void* Synth_GenerateAudio(void * arg) {
+    Synth_T synth = (Synth_T)arg;
+    //while the synth is running
     while (synth->running) {
         //lock the mutex
         pthread_mutex_lock(synth->mutex);
@@ -65,7 +66,8 @@ static void* Synth_GenerateAudio(Synth_T synth) {
 }
 
 // Audio output thread
-static void* Synth_OutputAudio(Synth_T synth) {
+static void* Synth_OutputAudio(void * arg) {
+    Synth_T synth = (Synth_T)arg;
     while (synth->running) {
         //lock the mutex while the audio is outputting
         pthread_mutex_lock(synth->mutex);
@@ -110,8 +112,8 @@ void Synth_Start(Synth_T synth) {
     if (synth->running) return;
     synth->running = true;
 
-    pthread_create(&synth->generator_thread, NULL, Synth_GenerateAudio, synth);
-    pthread_create(&synth->output_thread, NULL, Synth_OutputAudio, synth);
+    pthread_create(synth->generator_thread, NULL, Synth_GenerateAudio, synth);
+    pthread_create(synth->output_thread, NULL, Synth_OutputAudio, synth);
 }
 
 void Synth_Stop(Synth_T synth) {

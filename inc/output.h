@@ -11,9 +11,9 @@ typedef enum {
 } OutputType_t;
 
 //output to ALSA
-void Output_ALSA(int16_t sample);
+void Output_ALSA(int16_t * buffer, size_t size);
 
 //output to file
-void Output_File(int16_t sample);
+void Output_File(int16_t * buffer, size_t size);
 
 #endif // OUTPUT_H
