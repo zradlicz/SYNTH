@@ -1,4 +1,6 @@
 #include "synth.h"
+#include "osc.h"
+#include "buffer.h"
 #include "output.h"
 #include <pthread.h>
 #include <stdbool.h>
