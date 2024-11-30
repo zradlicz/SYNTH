@@ -26,9 +26,13 @@ void DoubleBuffer_UpdateInactive(DoubleBuffer_T db, int16_t* data) {
 }
 
 void DoubleBuffer_Swap(DoubleBuffer_T db) {
-    int16_t* temp = db->active_buffer;
-    db->active_buffer = db->inactive_buffer;
-    db->inactive_buffer = temp;
+     // Temporary buffer to hold one array during the swap
+    int16_t temp[BUFFER_SIZE];
+
+    // Swap using memcpy
+    memcpy(temp, db->active_buffer, BUFFER_SIZE * sizeof(int16_t));
+    memcpy(db->active_buffer, db->inactive_buffer, BUFFER_SIZE * sizeof(int16_t));
+    memcpy(db->inactive_buffer, temp, BUFFER_SIZE * sizeof(int16_t));
 }
 
 void DoubleBuffer_Clear(DoubleBuffer_T db) {
