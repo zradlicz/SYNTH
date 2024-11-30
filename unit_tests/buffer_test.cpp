@@ -6,8 +6,6 @@ extern "C" {
     #include "buffer.c" // Or your appropriate header file for `add_numbers` and `multiply`
 }
 
-DEFINE_FFF_GLOBALS;
-
 class UnitTestMain : public testing::Test
 {
 public:       
