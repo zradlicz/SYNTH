@@ -13,8 +13,8 @@ typedef struct DoubleBuffer_S * DoubleBuffer_T;
 DoubleBuffer_T DoubleBuffer_New(void);
 
 // Get active or inactive buffer pointers
-int16_t* DoubleBuffer_GetActive(DoubleBuffer_T db);
-int16_t* DoubleBuffer_GetInactive(DoubleBuffer_T db);
+void DoubleBuffer_GetActive(DoubleBuffer_T db, int16_t* data, size_t size);
+void DoubleBuffer_GetInactive(DoubleBuffer_T db, int16_t* data, size_t size);
 
 //Update the inactive buffer
 void DoubleBuffer_UpdateInactive(DoubleBuffer_T db, int16_t* data);

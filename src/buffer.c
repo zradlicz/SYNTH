@@ -13,12 +13,12 @@ DoubleBuffer_T DoubleBuffer_New(void) {
     return db;
 }
 
-int16_t* DoubleBuffer_GetActive(DoubleBuffer_T db) {
-    return db->active_buffer;
+void DoubleBuffer_GetActive(DoubleBuffer_T db, int16_t* data, size_t size) {
+    memcpy(data, db->active_buffer, size * sizeof(int16_t));
 }
 
-int16_t* DoubleBuffer_GetInactive(DoubleBuffer_T db) {
-    return db->inactive_buffer;
+void DoubleBuffer_GetInactive(DoubleBuffer_T db, int16_t* data, size_t size) {
+    memcpy(data, db->inactive_buffer, size * sizeof(int16_t));
 }
 
 void DoubleBuffer_UpdateInactive(DoubleBuffer_T db, int16_t* data) {

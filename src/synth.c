@@ -14,25 +14,31 @@ struct Synth_S {
     
     bool running;
 
-    pthread_mutex_t mutex;
-    pthread_cond_t cond;
+    pthread_mutex_t * mutex;
+    pthread_cond_t * cond;
 };
 
 // Audio generation thread
 static void Synth_GenerateAudio(Synth_T synth) {
+    //while th synth is running
     while (synth->running) {
+        //lock the mutex
         pthread_mutex_lock(synth->mutex);
-
+        //create a temporary buffer and a mixed buffer
+        //temporary buffer is used to store the output of each oscillator
+        //mixed buffer is used to store the sum of all oscillator outputs
         int16_t[BUFFER_SIZE] temp_buffer;
         int16_t[BUFFER_SIZE] mixed_buffer;
 
         memset(temp_buffer, 0, BUFFER_SIZE * sizeof(int16_t));
         memset(mixed_buffer, 0, BUFFER_SIZE * sizeof(int16_t));
 
+        //generate audio for each oscillator
         for(size_t i = 0; i < MAX_OSCILLATORS; i++) 
         {
             if(synth->oscillators[i] != NULL)
             {
+                //for each oscilaltor, generate audio and add it to the mixed buffer
                 Oscillator_Generate(oscillators[i], temp_buffer, sizeof(temp_buffer));
                 mixed_buffer[i] += temp_buffer[i];
             }
@@ -42,33 +48,40 @@ static void Synth_GenerateAudio(Synth_T synth) {
             }
         }
 
+        // Update inactive buffer with mixed buffer which is combination
+        // of all oscillator outputs
         DoubleBuffer_UpdateInactive(synth->buffer, mixed_buffer);
 
-        // Swap inactive buffer to active buffer
+        // Swap inactive buffer to active buffer. The inactive buffer now
+        // becomes the active buffer and vice versa
         DoubleBuffer_Swap(synth->buffer);
 
-        // Signal buffer is ready
-        pthread_cond_signal(&synth->cond);
-        pthread_mutex_unlock(&synth->mutex);
+        // active buffer is ready to be output
+        pthread_cond_signal(synth->cond);
+        //unlock the mutex once the active buffer is ready
+        pthread_mutex_unlock(synth->mutex);
     }
 }
 
 // Audio output thread
 static void Synth_OutputAudio(Synth_T synth) {
     while (synth->running) {
-        pthread_mutex_lock(&synth->mutex);
+        //lock the mutex while the audio is outputting
+        pthread_mutex_lock(synth->mutex);
 
-        // Wait for buffer to be ready
-        pthread_cond_wait(&synth->cond, &synth->mutex);
+        // Wait for active buffer to be populated
+        pthread_cond_wait(synth->cond, synth->mutex);
 
+        //creat temp buffer to store active buffer
+        int16_t active_buffer[BUFFER_SIZE];
         // Output the active buffer
-        int16_t* active_buffer = DoubleBuffer_GetActive(synth->buffer);
+        DoubleBuffer_GetActive(synth->buffer, acttive_buffer, sizeof(active_buffer));
         
         Output_File(active_buffer);
 
         printf("Outputting audio...\n");
 
-        pthread_mutex_unlock(&synth->mutex);
+        pthread_mutex_unlock(synth->mutex);
     }
 }
 
