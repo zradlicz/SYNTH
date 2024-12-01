@@ -15,15 +15,15 @@ DoubleBuffer_T DoubleBuffer_New(void) {
 }
 
 void DoubleBuffer_GetActive(DoubleBuffer_T db, int16_t* data, size_t size) {
-    memcpy(data, db->active_buffer, size * sizeof(int16_t));
+    memcpy(data, db->active_buffer, size);
 }
 
 void DoubleBuffer_GetInactive(DoubleBuffer_T db, int16_t* data, size_t size) {
-    memcpy(data, db->inactive_buffer, size * sizeof(int16_t));
+    memcpy(data, db->inactive_buffer, size);
 }
 
 void DoubleBuffer_UpdateInactive(DoubleBuffer_T db, int16_t* data) {
-    memcpy(db->inactive_buffer, data, BUFFER_SIZE * sizeof(int16_t));
+    memcpy(db->inactive_buffer, data, sizeof(data));
 }
 
 void DoubleBuffer_Swap(DoubleBuffer_T db) {
