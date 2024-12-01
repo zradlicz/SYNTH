@@ -18,14 +18,14 @@ public:
     }
 };
 
-TEST_F(UnitTestMain, Synth_New)
+TEST_F(UnitTestMain, Test_Synth_New)
 {
     Synth_T synth = Synth_New();
     ASSERT_TRUE(synth != NULL);
     ASSERT_EQ(synth->running, false);
 }
 
-TEST_F(UnitTestMain, Synth_AddOscillator)
+TEST_F(UnitTestMain, Test_Synth_AddOscillator)
 {
     Synth_T synth = Synth_New();
     Oscillator_T osc = Oscillator_New(WAVEFORM_SINE);
@@ -33,9 +33,18 @@ TEST_F(UnitTestMain, Synth_AddOscillator)
     ASSERT_TRUE(synth->oscillators[0] != NULL);
 }
 
-TEST_F(UnitTestMain, Synth_Start)
+TEST_F(UnitTestMain, Test_Synth_Start)
 {
     Synth_T synth = Synth_New();
     Synth_Start(synth);
     ASSERT_EQ(synth->running, true);
 }
+
+TEST_F(UnitTestMain, Test_Synth_Stop)
+{
+    Synth_T synth = Synth_New();
+    Synth_Start(synth);
+    Synth_Stop(synth);
+    ASSERT_EQ(synth->running, false);
+}
+
