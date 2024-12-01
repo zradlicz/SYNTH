@@ -35,9 +35,9 @@ void Oscillator_SetWaveform(Oscillator_T osc, WaveformType waveform_type) {
     osc->waveform_type = waveform_type;
 }
 
-void Oscillator_Generate(Oscillator_T osc, int16_t * data, uint16_t buffer_size) {
+void Oscillator_Generate(Oscillator_T osc, int16_t * data, size_t size) {
     double increment = 2.0 * PI * osc->frequency / osc->sample_rate;
-    for (size_t i = 0; i < buffer_size; i++) 
+    for (size_t i = 0; i < 3; i++) 
     {
         switch (osc->waveform_type) 
         {
