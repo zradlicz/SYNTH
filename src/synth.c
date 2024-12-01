@@ -91,9 +91,10 @@ static void* Synth_OutputAudio(void * arg) {
 }
 
 Synth_T Synth_New(void) {
-    Synth_T synth;
-    synth->buffer = DoubleBuffer_New();
-    synth->running = false;
+    static struct Synth_S synth;
+    Synth_T me = &synth;
+    me->buffer = DoubleBuffer_New();
+    me->running = false;
     pthread_mutex_init(synth->mutex, NULL);
     pthread_cond_init(synth->cond, NULL);
     return synth;
