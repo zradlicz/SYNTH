@@ -13,13 +13,14 @@ struct Oscillator_S {
 };
 
 Oscillator_T Oscillator_New(WaveformType waveform_type) {
-    Oscillator_T osc;
-    osc->frequency = 440.0;  // Default frequency (A4)
-    osc->amplitude = 32767; // Default amplitude for 16-bit audio
-    osc->phase = 0.0;
-    osc->sample_rate = 41000.0; // Default sample rate
-    osc->waveform_type = waveform_type;
-    return osc;
+    static struct Oscillator_S osc;
+    Oscillator_T me = &osc;
+    me->frequency = 440.0;  // Default frequency (A4)
+    me->amplitude = 32767; // Default amplitude for 16-bit audio
+    me->phase = 0.0;
+    me->sample_rate = 41000.0; // Default sample rate
+    me->waveform_type = waveform_type;
+    return me;
 }
 
 void Oscillator_SetFrequency(Oscillator_T osc, double frequency) {
