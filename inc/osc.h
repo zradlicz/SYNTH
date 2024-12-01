@@ -22,6 +22,6 @@ void Oscillator_SetAmplitude(Oscillator_T osc, int amplitude);
 void Oscillator_SetWaveform(Oscillator_T osc, WaveformType waveform_type);
 
 // Generate waveform samples
-void Oscillator_Generate(Oscillator_T osc, int16_t * data, uint16_t buffer_size);
+void Oscillator_Generate(Oscillator_T osc, int16_t * data, size_t size);
 
 #endif // OSCILLATOR_H
