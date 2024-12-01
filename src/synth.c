@@ -95,9 +95,9 @@ Synth_T Synth_New(void) {
     Synth_T me = &synth;
     me->buffer = DoubleBuffer_New();
     me->running = false;
-    pthread_mutex_init(synth->mutex, NULL);
-    pthread_cond_init(synth->cond, NULL);
-    return synth;
+    pthread_mutex_init(me->mutex, NULL);
+    pthread_cond_init(me->cond, NULL);
+    return me;
 }
 
 void Synth_AddOscillator(Synth_T synth, Oscillator_T osc) {
