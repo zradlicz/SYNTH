@@ -53,6 +53,7 @@ TEST_F(UnitTestMain, Test_Oscillator_SetWaveform)
 TEST_F(UnitTestMain, Test_Oscillator_Generate_Sine)
 {
     Oscillator_T osc = Oscillator_New(WAVEFORM_SINE);
+    Oscillator_SetAmplitudez(osc, 0);
     int16_t data[4410];
     Oscillator_Generate(osc, data, sizeof(data));
     for(size_t i = 0; i < 4410; i++)
