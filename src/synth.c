@@ -95,8 +95,8 @@ Synth_T Synth_New(void) {
     Synth_T me = &synth;
     me->buffer = DoubleBuffer_New();
     me->running = false;
-    //pthread_mutex_init(me->mutex, NULL);
-    //pthread_cond_init(me->cond, NULL);
+    pthread_mutex_init(&me->mutex, NULL);
+    //pthread_cond_init(&me->cond, NULL);
     return me;
 }
 
