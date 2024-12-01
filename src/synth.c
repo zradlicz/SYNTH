@@ -17,8 +17,8 @@ struct Synth_S {
     
     bool running;
 
-    pthread_mutex_t * mutex;
-    pthread_cond_t * cond;
+    pthread_mutex_t mutex;
+    pthread_cond_t cond;
 };
 
 // Audio generation thread
@@ -27,7 +27,7 @@ static void* Synth_GenerateAudio(void * arg) {
     //while the synth is running
     while (synth->running) {
         //lock the mutex
-        pthread_mutex_lock(synth->mutex);
+        pthread_mutex_lock(&synth->mutex);
         //create a temporary buffer and a mixed buffer
         //temporary buffer is used to store the output of each oscillator
         //mixed buffer is used to store the sum of all oscillator outputs
@@ -61,9 +61,9 @@ static void* Synth_GenerateAudio(void * arg) {
         DoubleBuffer_Swap(synth->buffer);
 
         // active buffer is ready to be output
-        pthread_cond_signal(synth->cond);
+        pthread_cond_signal(&synth->cond);
         //unlock the mutex once the active buffer is ready
-        pthread_mutex_unlock(synth->mutex);
+        pthread_mutex_unlock(&synth->mutex);
     }
 }
 
@@ -72,10 +72,10 @@ static void* Synth_OutputAudio(void * arg) {
     Synth_T synth = (Synth_T)arg;
     while (synth->running) {
         //lock the mutex while the audio is outputting
-        pthread_mutex_lock(synth->mutex);
+        pthread_mutex_lock(&synth->mutex);
 
         // Wait for active buffer to be populated
-        pthread_cond_wait(synth->cond, synth->mutex);
+        pthread_cond_wait(&synth->cond, &synth->mutex);
 
         //creat temp buffer to store active buffer
         int16_t active_buffer[BUFFER_SIZE];
@@ -86,7 +86,7 @@ static void* Synth_OutputAudio(void * arg) {
 
         printf("Outputting audio...\n");
 
-        pthread_mutex_unlock(synth->mutex);
+        pthread_mutex_unlock(&synth->mutex);
     }
 }
 
@@ -96,7 +96,7 @@ Synth_T Synth_New(void) {
     me->buffer = DoubleBuffer_New();
     me->running = false;
     pthread_mutex_init(me->mutex, NULL);
-    //pthread_cond_init(&me->cond, NULL);
+    pthread_cond_init(me->cond, NULL);
     return me;
 }
 
