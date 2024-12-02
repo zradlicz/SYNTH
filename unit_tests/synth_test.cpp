@@ -48,21 +48,41 @@ TEST_F(UnitTestMain, Test_Synth_Stop)
     ASSERT_EQ(synth->running, false);
 }
 
-TEST_F(UnitTestMain, Test_Synth_GenerateAudio)
-{
+TEST_F(UnitTestMain, Test_Synth_GenerateAudio) {
+    // Step 1: Initialize Synthesizer
     Synth_T synth = Synth_New();
-    printf("Creating oscillators\n");
+    ASSERT_TRUE(synth != NULL);
+
+    // Step 2: Add Oscillators
     Oscillator_T osc1 = Oscillator_New(WAVEFORM_SQUARE);
     Oscillator_T osc2 = Oscillator_New(WAVEFORM_SQUARE);
-    printf("Setting oscillator properties\n");
+    ASSERT_TRUE(osc1 != NULL);
+    ASSERT_TRUE(osc2 != NULL);
+
     Oscillator_SetAmplitude(osc1, 10000);
     Oscillator_SetAmplitude(osc2, 5000);
-    printf("Adding oscillators to synth\n");
     Synth_AddOscillator(synth, osc1);
     Synth_AddOscillator(synth, osc2);
-    printf("Starting audio generation\n");
-    Synth_GenerateAudio(&synth);
+
+    // Step 3: Start Synthesizer (Run the Generate Audio Thread)
+    synth->running = true;  // Set running to true before starting the thread
+    pthread_create(&synth->generator_thread, NULL, Synth_GenerateAudio, synth);
+
+    // Step 4: Allow some time for audio generation
+    sleep(1);  // Let the thread run for 1 second (adjust based on BUFFER_SIZE / sample rate)
+
+    // Step 5: Stop Synthesizer
+    synth->running = false;
+    pthread_join(synth->generator_thread, NULL);  // Wait for the thread to terminate
+
+    // Step 6: Verify Output in the Inactive Buffer
     int16_t buffer[BUFFER_SIZE];
-    DoubleBuffer_GetInactive(synth->buffer, buffer, sizeof(buffer));
-    ASSERT_EQ(buffer[0], 15000);
+    DoubleBuffer_GetInactive(synth->buffer, buffer, BUFFER_SIZE);
+
+    // Check some sample values in the buffer
+    ASSERT_EQ(buffer[0], 15000);  // 10000 + 5000 from the oscillators
+    ASSERT_EQ(buffer[1], 15000);  // Consistency check for generated waveforms
+
+    // Clean up
+    DoubleBuffer_Clear(synth->buffer);
 }
