@@ -57,7 +57,7 @@ TEST_F(UnitTestMain, Test_DoubleBuffer_UpdateInactive)
     {
         data[i] = 1000;
     }
-    DoubleBuffer_UpdateInactive(db, data, size(data));
+    DoubleBuffer_UpdateInactive(db, data, sizeof(data));
     int16_t buffer[BUFFER_SIZE];
     DoubleBuffer_GetInactive(db, buffer, sizeof(buffer));
     for(size_t i = 0; i < BUFFER_SIZE; i++)
