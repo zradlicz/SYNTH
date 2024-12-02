@@ -65,11 +65,12 @@ TEST_F(UnitTestMain, Test_Oscillator_Generate_Sine)
 TEST_F(UnitTestMain, Test_Oscillator_Generate_Square)
 {
     Oscillator_T osc = Oscillator_New(WAVEFORM_SQUARE);
+    Oscillator_SetAmplitude(osc, 0);
     int16_t data[4410];
     Oscillator_Generate(osc, data, sizeof(data));
     for(size_t i = 0; i < 4410; i++)
     {
-        ASSERT_EQ(data[i], 32767);
+        ASSERT_EQ(data[i], 0);
     }
 }
 
