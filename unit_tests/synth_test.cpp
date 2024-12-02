@@ -57,6 +57,7 @@ TEST_F(UnitTestMain, Test_Synth_GenerateAudio)
     Oscillator_SetAmplitude(osc2, 5000);
     Synth_AddOscillator(synth, osc1);
     Synth_AddOscillator(synth, osc2);
+    printf("Starting audio generation\n");
     Synth_GenerateAudio(&synth);
     int16_t buffer[BUFFER_SIZE];
     DoubleBuffer_GetInactive(synth->buffer, buffer, sizeof(buffer));

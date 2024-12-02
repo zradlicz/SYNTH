@@ -26,6 +26,7 @@ static void* Synth_GenerateAudio(void * arg) {
     Synth_T synth = (Synth_T)arg;
     //while the synth is running
     while (synth->running) {
+        printf("Generating audio in loop...\n");
         //lock the mutex
         pthread_mutex_lock(&synth->mutex);
         //create a temporary buffer and a mixed buffer
@@ -40,6 +41,7 @@ static void* Synth_GenerateAudio(void * arg) {
         //generate audio for each oscillator
         for(size_t i = 0; i < MAX_OSCILLATORS; i++) 
         {
+            printf("Generating audio for oscillator %zu\n", i);
             if(synth->oscillators[i] != NULL)
             {
                 //for each oscilaltor, generate audio and add it to the mixed buffer
@@ -54,15 +56,19 @@ static void* Synth_GenerateAudio(void * arg) {
 
         // Update inactive buffer with mixed buffer which is combination
         // of all oscillator outputs
+        printf("Updating inactive buffer...\n");
         DoubleBuffer_UpdateInactive(synth->buffer, mixed_buffer, sizeof(mixed_buffer));
 
         // Swap inactive buffer to active buffer. The inactive buffer now
         // becomes the active buffer and vice versa
+        printf("Swapping buffers...\n");
         DoubleBuffer_Swap(synth->buffer);
 
         // active buffer is ready to be output
+        printf("Audio buffer ready\n");
         pthread_cond_signal(&synth->cond);
         //unlock the mutex once the active buffer is ready
+        printf("Unlocking mutex...\n");
         pthread_mutex_unlock(&synth->mutex);
     }
 }
