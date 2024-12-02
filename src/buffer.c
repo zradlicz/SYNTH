@@ -22,8 +22,8 @@ void DoubleBuffer_GetInactive(DoubleBuffer_T db, int16_t* data, size_t size) {
     memcpy(data, db->inactive_buffer, size);
 }
 
-void DoubleBuffer_UpdateInactive(DoubleBuffer_T db, int16_t* data) {
-    memcpy(db->inactive_buffer, data, sizeof(data));
+void DoubleBuffer_UpdateInactive(DoubleBuffer_T db, int16_t* data, size_t size) {
+    memcpy(db->inactive_buffer, data, size);
 }
 
 void DoubleBuffer_Swap(DoubleBuffer_T db) {

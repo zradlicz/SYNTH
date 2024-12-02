@@ -54,7 +54,7 @@ static void* Synth_GenerateAudio(void * arg) {
 
         // Update inactive buffer with mixed buffer which is combination
         // of all oscillator outputs
-        DoubleBuffer_UpdateInactive(synth->buffer, mixed_buffer);
+        DoubleBuffer_UpdateInactive(synth->buffer, mixed_buffer, sizeof(mixed_buffer));
 
         // Swap inactive buffer to active buffer. The inactive buffer now
         // becomes the active buffer and vice versa

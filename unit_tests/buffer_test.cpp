@@ -57,7 +57,7 @@ TEST_F(UnitTestMain, Test_DoubleBuffer_UpdateInactive)
     {
         data[i] = 1000;
     }
-    DoubleBuffer_UpdateInactive(db, data);
+    DoubleBuffer_UpdateInactive(db, data, size(data));
     int16_t buffer[BUFFER_SIZE];
     DoubleBuffer_GetInactive(db, buffer, sizeof(buffer));
     for(size_t i = 0; i < BUFFER_SIZE; i++)
@@ -75,7 +75,7 @@ TEST_F(UnitTestMain, Test_DoubleBuffer_Swap)
     {
         data[i] = 1000;
     }
-    DoubleBuffer_UpdateInactive(db, data);
+    DoubleBuffer_UpdateInactive(db, data, sizeof(data));
     DoubleBuffer_Swap(db);
     int16_t buffer[BUFFER_SIZE];
     DoubleBuffer_GetActive(db, buffer, sizeof(buffer));
@@ -94,7 +94,7 @@ TEST_F(UnitTestMain, Test_DoubleBuffer_Clear)
     {
         data[i] = 1000;
     }
-    DoubleBuffer_UpdateInactive(db, data);
+    DoubleBuffer_UpdateInactive(db, data, sizeof(data));
     DoubleBuffer_Clear(db);
     int16_t buffer[BUFFER_SIZE];
     DoubleBuffer_GetInactive(db, buffer, sizeof(buffer));
