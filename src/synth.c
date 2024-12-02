@@ -44,7 +44,7 @@ static void* Synth_GenerateAudio(void * arg) {
             {
                 //for each oscilaltor, generate audio and add it to the mixed buffer
                 Oscillator_Generate(synth->oscillators[i], temp_buffer, sizeof(temp_buffer));
-                for(size_t i = 0; j < BUFFER_SIZE; i++)
+                for(size_t j = 0; j < BUFFER_SIZE; j++)
                 {
                     mixed_buffer[j] += temp_buffer[j];
                 }
