@@ -51,10 +51,13 @@ TEST_F(UnitTestMain, Test_Synth_Stop)
 TEST_F(UnitTestMain, Test_Synth_GenerateAudio)
 {
     Synth_T synth = Synth_New();
+    printf("Creating oscillators\n");
     Oscillator_T osc1 = Oscillator_New(WAVEFORM_SQUARE);
     Oscillator_T osc2 = Oscillator_New(WAVEFORM_SQUARE);
+    printf("Setting oscillator properties\n");
     Oscillator_SetAmplitude(osc1, 10000);
     Oscillator_SetAmplitude(osc2, 5000);
+    printf("Adding oscillators to synth\n");
     Synth_AddOscillator(synth, osc1);
     Synth_AddOscillator(synth, osc2);
     printf("Starting audio generation\n");
