@@ -65,15 +65,13 @@ TEST_F(UnitTestMain, Test_Synth_GenerateAudio) {
     Synth_AddOscillator(synth, osc2);
 
     // Step 3: Start Synthesizer (Run the Generate Audio Thread)
-    synth->running = true;  // Set running to true before starting the thread
-    pthread_create(&synth->generator_thread, NULL, Synth_GenerateAudio, synth);
+    Synth_Start(synth);
 
     // Step 4: Allow some time for audio generation
-    sleep(1);  // Let the thread run for 1 second (adjust based on BUFFER_SIZE / sample rate)
+    sleep(2);  // Let the thread run for 1 second (adjust based on BUFFER_SIZE / sample rate)
 
     // Step 5: Stop Synthesizer
-    synth->running = false;
-    pthread_join(synth->generator_thread, NULL);  // Wait for the thread to terminate
+    Synth_Stop(synth);
 
     // Step 6: Verify Output in the Inactive Buffer
     int16_t buffer[BUFFER_SIZE];
