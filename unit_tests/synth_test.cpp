@@ -68,7 +68,7 @@ TEST_F(UnitTestMain, Test_Synth_GenerateAudio) {
     Synth_Start(synth);
 
     // Step 4: Allow some time for audio generation
-    sleep(3);  // Let the thread run for 1 second (adjust based on BUFFER_SIZE / sample rate)
+    sleep(1);  // Let the thread run for 1 second (adjust based on BUFFER_SIZE / sample rate)
 
     // Step 5: Stop Synthesizer
     Synth_Stop(synth);
