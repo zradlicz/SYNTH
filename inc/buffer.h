@@ -17,7 +17,7 @@ void DoubleBuffer_GetActive(DoubleBuffer_T db, int16_t* data, size_t size);
 void DoubleBuffer_GetInactive(DoubleBuffer_T db, int16_t* data, size_t size);
 
 //Update the inactive buffer
-void DoubleBuffer_UpdateInactive(DoubleBuffer_T db, int16_t* data);
+void DoubleBuffer_UpdateInactive(DoubleBuffer_T db, int16_t* data, size_t size);
 
 // Swap the active and inactive buffers
 void DoubleBuffer_Swap(DoubleBuffer_T db);
