@@ -48,3 +48,18 @@ TEST_F(UnitTestMain, Test_Synth_Stop)
     ASSERT_EQ(synth->running, false);
 }
 
+TEST_F(UnitTestMain, Test_Synth_GenerateAudio)
+{
+    Synth_T synth = Synth_New();
+    Oscillator_T osc1 = Oscillator_New(WAVEFORM_SQUARE);
+    Oscillator_T osc2 = Oscillator_New(WAVEFORM_SQUARE);
+    Oscillator_SetAmplitude(osc1, 10000);
+    Oscillator_SetAmplitude(osc2, 5000);
+    Synth_AddOscillator(synth, osc1);
+    Synth_AddOscillator(synth, osc2);
+    Synth_Start(synth);
+    Synth_Stop(synth);
+    int16_t buffer[BUFFER_SIZE];
+    DoubleBuffer_GetInactive(synth->buffer, buffer, sizeof(buffer));
+    ASSERT_EQ(buffer[0], 15000);
+}
