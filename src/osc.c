@@ -1,4 +1,5 @@
 #include "osc.h"
+#include "buffer.h"
 #include <math.h>
 #include <string.h>
 
@@ -37,7 +38,7 @@ void Oscillator_SetWaveform(Oscillator_T osc, WaveformType waveform_type) {
 
 void Oscillator_Generate(Oscillator_T osc, int16_t * data, size_t size) {
     double increment = 2.0 * PI * osc->frequency / osc->sample_rate;
-    for (size_t i = 0; i < size; i++) 
+    for (size_t i = 0; i < BUFFER_SIZE; i++) 
     {
         switch (osc->waveform_type) 
         {
